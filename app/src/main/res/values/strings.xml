@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">HandyMan</string>
+    <string name="welcome_to_handyman_finder">Welcome to HandyMan Finder</string>
+    <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="do_not_have_an_account_sign_up">Do not have an account? Sign up</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
+</resources>
