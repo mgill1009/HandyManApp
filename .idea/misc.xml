@@ -8,13 +8,20 @@
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/contact_list_item.xml" value="0.35" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/job_information_list.xml" value="0.35" />
+        <entry key="app/src/main/res/drawable/background_message_input.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.15760869565217392" />
+        <entry key="app/src/main/res/layout/activity_job_description.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15806159420289856" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15806159420289856" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.15806159420289856" />
+        <entry key="app/src/main/res/layout/activity_user_post.xml" value="0.125" />
+        <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.15760869565217392" />
+        <entry key="app/src/main/res/layout/contact_list_item.xml" value="0.15760869565217392" />
+        <entry key="app/src/main/res/layout/job_list_item.xml" value="0.15760869565217392" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

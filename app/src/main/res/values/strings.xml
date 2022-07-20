@@ -11,4 +11,17 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="already_have_an_account_sign_in">Already have an account? Sign in</string>
     <string name="message_lister">Message Lister</string>
+    <string name="my_name">My Name</string>
+    <string name="add_photos">Add Photos</string>
+    <string name="user_image">User Image</string>
+    <string name="user_job_title">Title</string>
+    <string name="user_job_desc">Description</string>
+    <string name="user_job_price">Price</string>
+    <string name="user_job_est_time">Estimated Time</string>
+    <string name="chart_btn">chart_btn</string>
+    <string name="chart">Chart</string>
+    <string name="search">Search</string>
+    <string name="add">Add</string>
+    <string name="send_msg">Send</string>
+    <string name="type_a_message">Type a message</string>
 </resources>
