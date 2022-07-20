@@ -24,4 +24,5 @@
     <string name="add">Add</string>
     <string name="send_msg">Send</string>
     <string name="type_a_message">Type a message</string>
+    <string name="post">POST</string>
 </resources>
