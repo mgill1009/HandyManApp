@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:background="#E9E6FF"
     android:padding="10dp">
 
     <ImageView
@@ -22,13 +23,17 @@
             android:id="@+id/jobTitleListing_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Lawn Mowing"
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/name_textView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="John C" />
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/location_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
@@ -42,14 +47,12 @@
         <TextView
             android:id="@+id/price_textView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="$ 25" />
+            android:layout_height="wrap_content" />
 
         <TextView
             android:id="@+id/duration_textView"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="2h" />
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

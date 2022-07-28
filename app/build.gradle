@@ -2,7 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id "org.jetbrains.kotlin.kapt"
+    id 'com.google.gms.google-services'
 }
+
+//apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdk 32
@@ -53,5 +56,29 @@ dependencies {
     implementation "androidx.room:room-runtime:2.5.0-alpha02"
     kapt "androidx.room:room-compiler:2.5.0-alpha02"
     implementation("androidx.room:room-ktx:2.5.0-alpha02")
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:30.3.1')
+
+
+    // Add the dependency for the Firebase SDK for Google Analytics
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Also declare the dependency for the Google Play services library and specify its version
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
+
+    // Add the dependencies for any other desired Firebase products
+    // https://firebase.google.com/docs/android/setup#available-libraries
+
+    // Declare the dependency for the Cloud Firestore library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+
+    // FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.1'
+
 
 }

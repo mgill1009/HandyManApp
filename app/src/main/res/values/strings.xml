@@ -25,4 +25,6 @@
     <string name="send_msg">Send</string>
     <string name="type_a_message">Type a message</string>
     <string name="post">POST</string>
+    <string name="logout">Logout</string>
+    <string name="currently_posted_listings">Currently posted listings</string>
 </resources>
