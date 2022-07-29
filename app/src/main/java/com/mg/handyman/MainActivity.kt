@@ -61,12 +61,6 @@ class MainActivity : AppCompatActivity() {
 
         populateJobs()
 
-        // User adds a new job posting
-        addJobButton = findViewById(R.id.addJob_btn)
-        addJobButton.setOnClickListener{
-            val intent = Intent(this, UserPostActivity::class.java)
-            startActivity(intent)
-        }
     }
 
     /** Retrieve the collection currently posted jobs from Firestore and populate the
@@ -131,7 +125,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.logoutBtn){
+        if(item.itemId == R.id.addJobBtn){
+            val intent = Intent(this, UserPostActivity::class.java)
+            startActivity(intent)
+        }else if(item.itemId == R.id.logoutBtn){
             Log.i(TAG, "Logout")
             // Logout the user
             auth.signOut()

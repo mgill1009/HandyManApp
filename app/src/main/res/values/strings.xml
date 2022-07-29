@@ -29,4 +29,5 @@
     <string name="currently_posted_listings">Currently posted listings</string>
     <string name="location">Location</string>
     <string name="phone_number">Phone Number</string>
+    <string name="add_job">Add Job</string>
 </resources>
