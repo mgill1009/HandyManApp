@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlin.properties.Delegates
 
 class UserPostActivity : AppCompatActivity() {
     private lateinit var jobTitle : String
@@ -78,14 +79,15 @@ class UserPostActivity : AppCompatActivity() {
         val jobDescET = findViewById<TextInputEditText>(R.id.userJobDesc)
         val jobPriceET = findViewById<TextInputEditText>(R.id.userJobPrice)
         val jobDurationET = findViewById<TextInputEditText>(R.id.userJobEstTime)
-
-
+        val phoneET = findViewById<TextInputEditText>(R.id.userPhoneNumber)
+        val locationET = findViewById<TextInputEditText>(R.id.userLocation)
 
         jobTitle = jobTitleET.text.toString()
         jobDesc = jobDescET.text.toString()
         jobPrice = jobPriceET.text.toString()
         jobEstTime = jobDurationET.text.toString()
-
+        val phone = phoneET.text.toString().toLong()
+        val location = locationET.text.toString()
 
         // create a new job with provided entries
         val job = hashMapOf(
@@ -94,7 +96,8 @@ class UserPostActivity : AppCompatActivity() {
             "duration" to jobEstTime.toDouble(),
             "specialistName" to auth.currentUser?.displayName.toString(),
             "description" to jobDesc,
-            "location" to "Burnaby, BC",
+            "location" to location,
+            "phone" to phone,
             "pictureId" to spinner.selectedItem
         )
 

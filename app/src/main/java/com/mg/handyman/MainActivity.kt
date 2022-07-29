@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         private const val TAG = "MainActivity"
+        const val SELECTED_JOB = "Selected job"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -102,8 +103,16 @@ class MainActivity : AppCompatActivity() {
                 durationTV.text = duration
                 locationTV.text = model.location
                 imageView.setImageResource(model.pictureId)
+
+                // Opens selected job in a new activity
+                holder.itemView.setOnClickListener{
+                    val intent = Intent(it.context, JobActivity::class.java)
+                    intent.putExtra(SELECTED_JOB, model)
+                    it.context.startActivity(intent)
+                }
             }
         }
+
         rvJobs.adapter = adapter
         // set layout manager on recyclerView
         val mLayoutManager = LinearLayoutManager(this)

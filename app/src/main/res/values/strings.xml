@@ -27,4 +27,6 @@
     <string name="post">POST</string>
     <string name="logout">Logout</string>
     <string name="currently_posted_listings">Currently posted listings</string>
+    <string name="location">Location</string>
+    <string name="phone_number">Phone Number</string>
 </resources>
