@@ -8,14 +8,30 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/welcome_tv"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="22sp"
-        android:textAlignment="viewStart"
-        android:layout_marginHorizontal="4dp"
-        android:textStyle="bold" />
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/welcome_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:background="#73A9D1"
+            android:textColor="@color/white"
+            android:layout_marginStart="5dp"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:id="@+id/addJob_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Post a new job" />
+
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -25,7 +41,10 @@
         android:textAlignment="center"
         android:layout_marginHorizontal="4dp"
         android:text="@string/currently_posted_listings"
-        android:textStyle="normal" />
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="#795E53"
+        android:padding="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_jobs"
@@ -33,13 +52,6 @@
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
         android:layout_weight="1"/>
-
-
-    <Button
-        android:id="@+id/addJob_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add a new job" />
 
 
 </LinearLayout>

@@ -7,5 +7,6 @@ data class Job(
     val duration: Double = 0.0,
     val phone: Long = 0L,
     val description: String = "",
-    val location: String = ""
+    val location: String = "",
+    val pictureId: Int = R.drawable.job
 )

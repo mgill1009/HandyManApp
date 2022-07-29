@@ -16,7 +16,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
             <TextView
                 android:id="@+id/userName"
                 android:layout_width="match_parent"
@@ -58,13 +57,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toEndOf="@+id/userImgAddBtn"
                     android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@+id/userImgAddBtn"
                     android:text="@string/add_photos"
-                    android:textStyle="bold"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
+
+            <Spinner
+                android:layout_margin="10dp"
+                android:id="@+id/image_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/userJobTitleContainer"
@@ -116,6 +121,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:hint="@string/user_job_price"
+                    android:inputType="numberDecimal"
                     android:padding="14dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -133,10 +139,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:hint="@string/user_job_est_time"
+                    android:inputType="numberDecimal"
                     android:padding="14dp"
                     android:textColorHint="#546E7A" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
     </ScrollView>
 
     <LinearLayout

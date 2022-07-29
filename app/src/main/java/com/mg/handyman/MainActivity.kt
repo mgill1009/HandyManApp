@@ -5,18 +5,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
+
 
 class JobViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
@@ -35,7 +37,6 @@ class MainActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
 
-    // This button is for testing purpose only and will be used in UserPostActivity later
     private lateinit var addJobButton: Button
 
     companion object{
@@ -59,12 +60,12 @@ class MainActivity : AppCompatActivity() {
 
         populateJobs()
 
-        // TODO need to move this to UserPostActivity later
+        // User adds a new job posting
         addJobButton = findViewById(R.id.addJob_btn)
         addJobButton.setOnClickListener{
-            addJobEntry()
+            val intent = Intent(this, UserPostActivity::class.java)
+            startActivity(intent)
         }
-
     }
 
     /** Retrieve the collection currently posted jobs from Firestore and populate the
@@ -86,6 +87,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onBindViewHolder(holder: JobViewHolder, position: Int, model: Job) {
+                val imageView: ImageView = holder.itemView.findViewById(R.id.jobImage_imageView)
                 val nameTV: TextView = holder.itemView.findViewById(R.id.name_textView)
                 val jobTitleTV: TextView = holder.itemView.findViewById(R.id.jobTitleListing_textView)
                 val priceTV: TextView = holder.itemView.findViewById(R.id.price_textView)
@@ -99,11 +101,19 @@ class MainActivity : AppCompatActivity() {
                 val duration = "${decimalFormat.format(model.duration)} hrs"
                 durationTV.text = duration
                 locationTV.text = model.location
+                imageView.setImageResource(model.pictureId)
             }
         }
         rvJobs.adapter = adapter
         // set layout manager on recyclerView
-        rvJobs.layoutManager = LinearLayoutManager(this)
+        val mLayoutManager = LinearLayoutManager(this)
+        rvJobs.layoutManager = mLayoutManager
+        val mDividerItemDecoration = DividerItemDecoration(
+            rvJobs.context,
+            mLayoutManager.orientation
+        )
+        rvJobs.addItemDecoration(mDividerItemDecoration)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -124,27 +134,8 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    // TODO (remove this later, once implemented in UserPost) Test function to add job entry to Firestore
-    private fun addJobEntry(){
-
-        // create a new job with provided entries
-        val job = hashMapOf(
-            "title" to "Plumber",
-            "price" to 50,
-            "duration" to 60,
-            "specialistName" to "John Doe",
-            "description" to "",
-            "location" to "Burnaby, BC"
-        )
-        // Add a new job entry to Firestore with a generated ID
-        db.collection("jobs")
-            .add(job)
-            .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot added with ID; ${it.id}")
-            }
-            .addOnFailureListener{
-                Log.w(TAG, "Error adding document", it)
-            }
-
+    override fun onResume() {
+        super.onResume()
+        populateJobs()
     }
 }
