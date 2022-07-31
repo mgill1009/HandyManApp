@@ -19,7 +19,10 @@ import kotlinx.android.synthetic.main.activity_message_list.*
 class MessageListActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
-    private lateinit var users: MutableList<String>
+    private lateinit var users: MutableList<User>
+    companion object {
+        val NAME_KEY = "NAME_KEY"
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -41,17 +44,23 @@ class MessageListActivity : AppCompatActivity() {
                 finish()
             }
             querySnapshot?.let {
-                val tmpArr: MutableList<String> = ArrayList()
+                val tmpArr: MutableList<User> = ArrayList()
                 for (user in it) {
-                    // I do not think I am accessing the data correctly
-                    tmpArr.add(user.data.values.toString())
+
+                    tmpArr.add(User(user.data.values.toString(), user.id))
                 }
                 users = tmpArr
-                val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, users)
+                val userNames = tmpArr.map { it.username }
+                val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, userNames)
                 listViewMessages.adapter = adapter
                 listViewMessages.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, _ ->
-                    println(parent.getItemAtPosition(position))
+//                    val user = parent.getItemAtPosition(position) as User
+                    val user = users[position]
                     val intent = Intent(view.context, ChatActivity::class.java)
+
+                    val bundle = Bundle()
+                    bundle.putParcelable(NAME_KEY, user)
+                    intent.putExtras(bundle)
                     startActivity(intent)
                 }
             }
