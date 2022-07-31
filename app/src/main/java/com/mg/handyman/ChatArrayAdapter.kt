@@ -7,7 +7,7 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 
-internal class ChatArrayAdapter(private var chatList: Array<Chat>,
+internal class ChatArrayAdapter(private var chatList: ArrayList<Chat>,
                                 private val activity: FragmentActivity,
                                 private val side: Int): BaseAdapter() {
     private lateinit var textView: TextView
