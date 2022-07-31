@@ -125,10 +125,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(item.itemId == R.id.addJobBtn){
+        if (item.itemId == R.id.addJobBtn) {
             val intent = Intent(this, UserPostActivity::class.java)
             startActivity(intent)
-        }else if(item.itemId == R.id.logoutBtn){
+        } else if(item.itemId == R.id.logoutBtn) {
             Log.i(TAG, "Logout")
             // Logout the user
             auth.signOut()
@@ -136,6 +136,9 @@ class MainActivity : AppCompatActivity() {
             // clear the entire back stack
             logOutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(logOutIntent)
+        } else if (item.itemId == R.id.messagesBtn) {
+            val intent = Intent(this, MessageListActivity::class.java)
+            startActivity(intent)
         }
         return super.onOptionsItemSelected(item)
     }
