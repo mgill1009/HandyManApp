@@ -50,7 +50,7 @@ class MessageListActivity : AppCompatActivity() {
                     tmpArr.add(User(user.data.values.toString(), user.id))
                 }
                 users = tmpArr
-                val userNames = tmpArr.map { it.username }
+                val userNames = tmpArr.map { it.username.replace("[", "").replace("]", "") }
                 val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, userNames)
                 listViewMessages.adapter = adapter
                 listViewMessages.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, _ ->
