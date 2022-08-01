@@ -10,7 +10,9 @@
     <ImageView
         android:id="@+id/jobImage_imageView"
         android:layout_width="75dp"
-        android:layout_height="75dp">
+        android:layout_height="75dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true">
 
     </ImageView>
 
