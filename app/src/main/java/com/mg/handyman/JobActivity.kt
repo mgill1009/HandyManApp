@@ -4,6 +4,7 @@ package com.mg.handyman
  * Shows a particular job details
  */
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -45,5 +46,13 @@ class JobActivity : AppCompatActivity() {
         val serviceInfo = "$${decimalFormat.format(model.price)} per hour    |   Estimated time: ${decimalFormat.format(model.duration)} hours"
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
+
+        //Message lister activity
+        messageButton.setOnClickListener {
+            val intent = Intent(this, MessageListActivity::class.java)
+            startActivity(intent)
+        }
     }
+
+
 }
