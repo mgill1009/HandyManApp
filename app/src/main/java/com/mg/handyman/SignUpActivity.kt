@@ -15,12 +15,15 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var signUpButton: Button
     private lateinit var signInTextView: TextView
     private lateinit var auth: FirebaseAuth
+
+    private val db = Firebase.firestore
 
     companion object{
         const val TAG = "SignUpActivity"
@@ -59,25 +62,38 @@ class SignUpActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT).show()
             }else{
                 // Create a new account in Firebase
+
                 auth.createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener(this){ it ->
                         if(it.isSuccessful){
                             // Sign in success, update UI with the signed in user's information
                             Log.d(TAG, "createUserWithEmail:success")
-                            val user = auth.currentUser
+                            val user = it.result.user
+                            if (user != null) {
+                                Log.d(TAG, "USer is ${user.uid}")
+                            }
 
                             // Update user's name - profile pic (later)
                             val profileUpdates = userProfileChangeRequest {
-                                displayName = "$firstName $lastName"
-                                Log.d(TAG, "display name is $displayName")
-                                // add profile pic if needed
-                                // photoUri = Uri.parse("https://example.com/jane-q-user/profile.jpg")
+                                this.displayName = "$firstName $lastName"
                             }
 
                             user!!.updateProfile(profileUpdates)
                                 .addOnCompleteListener{task ->
                                     if(task.isSuccessful){
                                         Log.d(TAG, "User profile updated")
+
+                                        val name = "$firstName $lastName"
+                                        val user1 = hashMapOf(
+                                            "displayName" to name,
+                                            "uid" to user.uid,
+                                        )
+
+                                        db.collection("users").add(user1)
+                                            .addOnSuccessListener { Log.d(TAG, "DocumentSnapshot added with ID; ${it.id}") }
+                                            .addOnFailureListener{
+                                                Log.w(TAG, "Error adding document", it)
+                                            }
                                         updateUI(user)
                                     }
                                 }
@@ -91,7 +107,6 @@ class SignUpActivity : AppCompatActivity() {
                         }
                     }
             }
-
         }
         signInTextView = findViewById(R.id.signIn_tv)
         signInTextView.setOnClickListener{
