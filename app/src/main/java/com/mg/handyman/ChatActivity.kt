@@ -35,7 +35,7 @@ class ChatActivity : AppCompatActivity() {
         val bundle = intent.extras
         otherUser = bundle!!.getParcelable(MessageListActivity.NAME_KEY)!!
 
-        supportActionBar?.title = otherUser.username
+        supportActionBar?.title = otherUser.username.replace("[", "").replace("]", "")
 
         currentUser = User(auth.currentUser!!.displayName.toString(),
             auth.currentUser!!.uid

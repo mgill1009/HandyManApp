@@ -22,8 +22,11 @@ class JobActivity : AppCompatActivity() {
     private lateinit var messageButton: Button
     private val decimalFormat = DecimalFormat("0.#")
 
+//    private lateinit var users: MutableList<User>
+
     companion object{
         private const val TAG = "JobActivity"
+//        val NAME_KEY = "NAME_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +52,11 @@ class JobActivity : AppCompatActivity() {
 
 //        //Message lister activity
 //        messageButton.setOnClickListener {
-//            val intent = Intent(this, MessageListActivity::class.java)
+//            val intent = Intent(this, ChatActivity::class.java)
+////            val bundle = Bundle()
+////
+////            bundle.putParcelable(MessageListActivity.NAME_KEY, user)
+////            intent.putExtras(bundle)
 //            startActivity(intent)
 //        }
     }
