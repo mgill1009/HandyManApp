@@ -4,6 +4,7 @@ package com.mg.handyman
  * Shows a particular job details
  */
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -21,8 +22,11 @@ class JobActivity : AppCompatActivity() {
     private lateinit var messageButton: Button
     private val decimalFormat = DecimalFormat("0.#")
 
+//    private lateinit var users: MutableList<User>
+
     companion object{
         private const val TAG = "JobActivity"
+//        val NAME_KEY = "NAME_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,5 +49,17 @@ class JobActivity : AppCompatActivity() {
         val serviceInfo = "$${decimalFormat.format(model.price)} per hour    |   Estimated time: ${decimalFormat.format(model.duration)} hours"
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
+
+//        //Message lister activity
+//        messageButton.setOnClickListener {
+//            val intent = Intent(this, ChatActivity::class.java)
+////            val bundle = Bundle()
+////
+////            bundle.putParcelable(MessageListActivity.NAME_KEY, user)
+////            intent.putExtras(bundle)
+//            startActivity(intent)
+//        }
     }
+
+
 }
