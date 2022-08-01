@@ -57,7 +57,11 @@ class SignUpActivity : AppCompatActivity() {
                 findViewById<EditText>(R.id.confirmPass_editText).setText("")
                 Toast.makeText(this, "Passwords didn't match! Please try again.",
                     Toast.LENGTH_SHORT).show()
-            }else{
+            } else if(password.toString().length < 6) {
+            //If password is less has a length less than 6
+            Toast.makeText(this, "Password must have a length of 6.",
+                Toast.LENGTH_SHORT).show()
+            } else {
                 // Create a new account in Firebase
                 auth.createUserWithEmailAndPassword(email.toString(), password.toString())
                     .addOnCompleteListener(this){ it ->
