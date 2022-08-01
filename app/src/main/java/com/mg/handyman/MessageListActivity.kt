@@ -46,11 +46,11 @@ class MessageListActivity : AppCompatActivity() {
             querySnapshot?.let {
                 val tmpArr: MutableList<User> = ArrayList()
                 for (user in it) {
-
                     tmpArr.add(User(user.data.values.toString(), user.id))
                 }
                 users = tmpArr
-                val userNames = tmpArr.map { it.username.replace("[", "").replace("]", "") }
+                val userNames = tmpArr.map { it.username.replace("[", "").
+                                    replace("]", "").substringAfter(", ") }
                 val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, userNames)
                 listViewMessages.adapter = adapter
                 listViewMessages.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, _ ->
