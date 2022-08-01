@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 
@@ -27,6 +28,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var googleSignInButton: SignInButton
     private lateinit var signInIntent: Intent
     private lateinit var auth: FirebaseAuth
+    private val db = Firebase.firestore
 
     companion object{
         private const val RC_GOOGLE_SIGN_IN = 326
@@ -113,7 +115,20 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     val user: FirebaseUser? = auth.currentUser
+
+                    // Add user to Firestore collection
+                    if (user != null){
+                        val user1 = hashMapOf(
+                            "displayName" to (user.displayName),
+                            "uid" to (user.uid),
+                        )
+                        db.collection("users").add(user1)
+                            .addOnSuccessListener { Log.d(SignUpActivity.TAG, "DocumentSnapshot added with ID; ${it.id}") }
+                            .addOnFailureListener { Log.w(SignUpActivity.TAG, "Error adding document", it) }
+                    }
+
                     updateUI(user)
+
                 }else{
                     // if sign in fails, display a message to the user
                     Log.w(TAG, "signInWithCredential:failure", it.exception)
