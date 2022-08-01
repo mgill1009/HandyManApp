@@ -47,11 +47,11 @@ class JobActivity : AppCompatActivity() {
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
 
-        //Message lister activity
-        messageButton.setOnClickListener {
-            val intent = Intent(this, MessageListActivity::class.java)
-            startActivity(intent)
-        }
+//        //Message lister activity
+//        messageButton.setOnClickListener {
+//            val intent = Intent(this, MessageListActivity::class.java)
+//            startActivity(intent)
+//        }
     }
 
 
