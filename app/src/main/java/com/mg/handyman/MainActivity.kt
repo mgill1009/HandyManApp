@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
         welcomeTextView.text = message
 
         populateJobs()
-
     }
 
     /** Retrieve the collection currently posted jobs from Firestore and populate the
