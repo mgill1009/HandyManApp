@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="left_message_item">#CDCDCB</color>
     <color name="right_message_item">#73A9D1</color>
+    <color name="user_post_button_color">#73A9D1</color>
 </resources>
