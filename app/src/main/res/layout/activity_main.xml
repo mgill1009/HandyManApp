@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="30dp"
-    android:layout_marginHorizontal="10dp"
+    android:background="#F4FAFF"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -15,9 +14,10 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/welcome_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:textAlignment="viewEnd"
+            android:textSize="18sp"
             android:padding="8dp"
             android:layout_marginStart="5dp"/>
         <View
@@ -32,18 +32,17 @@
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:layout_marginTop="15dp"
-        android:textAlignment="center"
         android:text="@string/currently_posted_listings"
         android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="#2568E4"
+        android:textColor="@color/black"
         android:padding="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_jobs"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"
-        android:layout_weight="1"/>
+        android:scrollbars="vertical"
+        android:layout_marginTop="5dp"
+         android:layout_weight="1"/>
 
 </LinearLayout>

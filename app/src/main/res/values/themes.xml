@@ -2,8 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.HandyMan" parent="Theme.Material3.DayNight">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">#73A9D1</item>
-        <item name="colorPrimaryVariant">#73A9D1</item>
+        <item name="colorPrimary">#2568E4</item>
+        <item name="colorPrimaryVariant">#2568E4</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#A18276</item>
