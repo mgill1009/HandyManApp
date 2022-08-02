@@ -9,7 +9,7 @@
         <EditText
             android:id="@+id/messageInputET"
             android:layout_width="0dp"
-            android:layout_height="65dp"
+            android:layout_height="45dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="40dp"
@@ -18,9 +18,9 @@
             android:hint="@string/type_a_message"
             android:importantForAutofill="no"
             android:inputType="text"
-            android:padding="20dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendBtn"
             app:layout_constraintStart_toStartOf="parent" />
@@ -35,7 +35,7 @@
             android:contentDescription="@string/send_msg"
             android:padding="20dp"
             android:src="@drawable/ic_send"
-            android:tint="@color/teal_200"
+            android:tint="#73A9D1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -43,6 +43,7 @@
             android:id="@+id/chatListView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toTopOf="@+id/messageInputET"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
