@@ -138,6 +138,8 @@ class MainActivity : AppCompatActivity() {
         } else if (item.itemId == R.id.messagesBtn) {
             val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
+        } else if(item.itemId == R.id.myListingsBtn){
+            // TODO
         }
         return super.onOptionsItemSelected(item)
     }

@@ -36,7 +36,7 @@
         android:text="@string/currently_posted_listings"
         android:textStyle="bold"
         android:textColor="@color/white"
-        android:background="#73A9D1"
+        android:background="#2568E4"
         android:padding="10dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
