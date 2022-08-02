@@ -3,31 +3,26 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/School/HandyManApps/app/src/main/res/drawable/textview_border.xml" value="0.226" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_chat.xml" value="0.1707193515704154" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_email_login.xml" value="0.1707193515704154" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_job.xml" value="0.1707193515704154" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_job_description.xml" value="0.25" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_login.xml" value="0.2151268115942029" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_main.xml" value="0.35104166666666664" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_message_list.xml" value="0.1707193515704154" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_sign_up.xml" value="0.1707193515704154" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/activity_user_post.xml" value="0.35104166666666664" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/chat_row.xml" value="0.1707193515704154" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/contact_list_item.xml" value="0.35" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/content_spinner.xml" value="0.1707193515704154" />
         <entry key="..\:/School/HandyManApps/app/src/main/res/layout/job_information_list.xml" value="0.35" />
-        <entry key="..\:/School/HandyManApps/app/src/main/res/layout/job_list_item.xml" value="0.1707193515704154" />
         <entry key="app/src/main/res/drawable/background_message_input.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/message_item_left.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/message_item_right.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/activity_job_description.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.15806159420289856" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15806159420289856" />
+        <entry key="app/src/main/res/layout/activity_message_list.xml" value="0.21693840579710144" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.15806159420289856" />
         <entry key="app/src/main/res/layout/activity_user_post.xml" value="0.125" />
         <entry key="app/src/main/res/layout/activity_user_profile.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/contact_list_item.xml" value="0.15760869565217392" />
         <entry key="app/src/main/res/layout/job_list_item.xml" value="0.15760869565217392" />
+        <entry key="app/src/main/res/layout/message_left.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/message_right.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_post.xml" value="0.2604166666666667" />
       </map>
     </option>
