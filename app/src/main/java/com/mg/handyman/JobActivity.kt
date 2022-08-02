@@ -10,7 +10,9 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_job.*
+import android.widget.Toast
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
 
 class JobActivity : AppCompatActivity() {
@@ -22,11 +24,16 @@ class JobActivity : AppCompatActivity() {
     private lateinit var messageButton: Button
     private val decimalFormat = DecimalFormat("0.#")
 
+    private lateinit var lister: User
+    private lateinit var users: MutableList<User>
+    private lateinit var jobUid: String
+    private val db = Firebase.firestore
+
 //    private lateinit var users: MutableList<User>
 
     companion object{
         private const val TAG = "JobActivity"
-//        val NAME_KEY = "NAME_KEY"
+        val NAME_KEY = "NAME_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,16 +57,36 @@ class JobActivity : AppCompatActivity() {
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
 
-//        //Message lister activity
-//        messageButton.setOnClickListener {
-//            val intent = Intent(this, ChatActivity::class.java)
-////            val bundle = Bundle()
-////
-////            bundle.putParcelable(MessageListActivity.NAME_KEY, user)
-////            intent.putExtras(bundle)
-//            startActivity(intent)
-//        }
+        val query = db.collection("users")
+        query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
+            // if there is an exception create a toast and close messagelist
+            firebaseFirestoreException?.let {
+                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                finish()
+            }
+            querySnapshot?.let {
+                val tmpArr: MutableList<User> = ArrayList()
+                for (user in it) {
+                    tmpArr.add(User(user.data.values.toString(), user.id))
+                }
+
+                users = tmpArr
+                lister = users.find { it.username.contains(model.uid)}!!
+
+                //Message lister activity
+                messageButton.setOnClickListener {
+                    val intent = Intent(this, ChatActivity::class.java)
+                    val bundle = Bundle()
+
+                    bundle.putParcelable(MessageListActivity.NAME_KEY, lister)
+                    intent.putExtras(bundle)
+                    startActivity(intent)
+                }
+            }
+
+            }
+        }
+
     }
 
 
-}
