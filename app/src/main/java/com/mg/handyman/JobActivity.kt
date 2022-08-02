@@ -57,36 +57,21 @@ class JobActivity : AppCompatActivity() {
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
 
-        val query = db.collection("users")
-        query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            // if there is an exception create a toast and close messagelist
-            firebaseFirestoreException?.let {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                finish()
-            }
-            querySnapshot?.let {
-                val tmpArr: MutableList<User> = ArrayList()
-                for (user in it) {
-                    tmpArr.add(User(user.data.values.toString(), user.id))
-                }
 
-                users = tmpArr
-                lister = users.find { it.username.contains(model.uid)}!!
+        lister = User(model.specialistName, model.uid)
 
-                //Message lister activity
-                messageButton.setOnClickListener {
-                    val intent = Intent(this, ChatActivity::class.java)
-                    val bundle = Bundle()
+        //Message lister activity
+        messageButton.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            val bundle = Bundle()
 
-                    bundle.putParcelable(MessageListActivity.NAME_KEY, lister)
-                    intent.putExtras(bundle)
-                    startActivity(intent)
-                }
-            }
-
-            }
+            bundle.putParcelable(MessageListActivity.NAME_KEY, lister)
+            intent.putExtras(bundle)
+            startActivity(intent)
         }
 
     }
+
+}
 
 

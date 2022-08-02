@@ -116,17 +116,14 @@ class MessageListActivity : AppCompatActivity() {
 
                     Log.d("debug", "values are: $text")
 
-                    if(toId != auth.currentUser?.uid){
-                        if(!tmpArr.contains(User(to as String, toId as String)))
-                            tmpArr.add(User(to, toId))
-                    }else if(fromId != auth.currentUser?.uid){
+                    if(fromId != auth.currentUser?.uid){
                         if(!tmpArr.contains(User(from as String, fromId as String)))
                             tmpArr.add(User(from, fromId))
+                    }else if(toId != auth.currentUser?.uid){
+                        if(!tmpArr.contains(User(to as String, toId as String)))
+                            tmpArr.add(User(to, toId))
                     }
 
-                    //val id = user.data.values.first()
-                    //val name = user.data.values.last()
-                    //tmpArr.add(User(name as String, id as String))
                     Log.d("debug", "tmp arr is ${tmpArr}")
                 }
                 users = tmpArr
