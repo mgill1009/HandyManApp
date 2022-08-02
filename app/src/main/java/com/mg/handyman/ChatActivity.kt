@@ -105,12 +105,16 @@ class ChatActivity : AppCompatActivity() {
         val text = messageEditText.text.toString()
         if (text != "") {
             val fromId = currentUser.uid
+            val from = currentUser.username
             val toId = otherUser.uid
+            val to = otherUser.username
             val date = Timestamp(java.util.Date())
             val messageData = hashMapOf(
                 "text" to text,
                 "fromId" to fromId,
                 "toId" to toId,
+                "from" to from,
+                "to" to to,
                 "date" to date
             )
             db.collection("messages")
