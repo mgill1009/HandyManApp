@@ -56,6 +56,7 @@ class MessageListActivity : AppCompatActivity() {
                 listViewMessages.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, _ ->
 //                    val user = parent.getItemAtPosition(position) as User
                     val user = users[position]
+                    println(user)
                     val intent = Intent(view.context, ChatActivity::class.java)
 
                     val bundle = Bundle()

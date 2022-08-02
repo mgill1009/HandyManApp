@@ -12,5 +12,6 @@ data class Job(
     val phone: Long = 0L,
     val description: String = "",
     val location: String = "Burnaby, BC",
-    val pictureId: Int = R.drawable.job
+    val pictureId: Int = R.drawable.job,
+    val uid: String = ""
 ): Parcelable
