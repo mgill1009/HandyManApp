@@ -80,8 +80,7 @@ class ChatActivity : AppCompatActivity() {
                                 User(otherUser.username, otherUser.uid),
                                 message.id)
                             chatArrayList.add(msg)
-                            val sorted= ArrayList(chatArrayList.sortedWith(compareBy { it.date as Comparable<*>? }))
-                            chatArrayList = sorted
+
                             adapter.notifyDataSetChanged()
                         }
                     }
