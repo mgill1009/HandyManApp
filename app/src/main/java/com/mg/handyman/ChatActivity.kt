@@ -65,7 +65,7 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun initMessageListener() {
-        val query = db.collection("messages")
+        val query = db.collection("messages").orderBy("date")   // sort chat by date created
         query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             // if there is an exception create a toast and close messagelist
             firebaseFirestoreException?.let {
