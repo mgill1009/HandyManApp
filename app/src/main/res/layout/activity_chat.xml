@@ -22,7 +22,7 @@
             android:textColorHint="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/sendBtn"
-            app:layout_constraintStart_toStartOf="parent"></EditText>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/sendBtn"

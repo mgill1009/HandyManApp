@@ -98,7 +98,8 @@ class UserPostActivity : AppCompatActivity() {
             "description" to jobDesc,
             "location" to location,
             "phone" to phone,
-            "pictureId" to spinner.selectedItem
+            "pictureId" to spinner.selectedItem,
+            "uid" to (auth.currentUser?.uid ?: "")
         )
 
         // Add a new job entry to Firestore with a generated ID
