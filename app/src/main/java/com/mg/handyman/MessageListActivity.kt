@@ -45,7 +45,6 @@ class MessageListActivity : AppCompatActivity() {
         val query = db.collection("messages").whereEqualTo("fromId", auth.currentUser?.uid)
 
         val query2 = db.collection("messages").whereEqualTo("toId", auth.currentUser?.uid)
-        // TODO need to check toId in query as well
 
         // updates when db changes
         query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
