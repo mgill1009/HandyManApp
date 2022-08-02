@@ -1,6 +1,7 @@
 package com.mg.handyman
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
@@ -11,6 +12,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class ChatActivity : AppCompatActivity() {
 
@@ -44,7 +48,7 @@ class ChatActivity : AppCompatActivity() {
 
         chatArrayList = arrayListOf()
 
-        adapter = ChatArrayAdapter(chatArrayList, this, 1)
+        adapter = ChatArrayAdapter(chatArrayList, this, currentUser, 1)
 
         initMessageListener()
 
@@ -76,9 +80,11 @@ class ChatActivity : AppCompatActivity() {
                         if ((chatArrayList.filter { chat -> chat.id == message.id }).isNotEmpty()) {
                             continue
                         } else {
-                            val msg = Chat(data["text"] as String,
+                            val msg = Chat(
+                                data["text"] as String,
                                 User(otherUser.username, otherUser.uid),
-                                message.id)
+                                message.id, data["date"], data["toId"], data["fromId"]
+                            )
                             chatArrayList.add(msg)
                             adapter.notifyDataSetChanged()
                         }
@@ -90,7 +96,7 @@ class ChatActivity : AppCompatActivity() {
                         } else {
                             val msg = Chat(data["text"] as String,
                                 User(currentUser.username, currentUser.uid),
-                                message.id)
+                                message.id, data["date"], data["toId"], data["fromId"])
                             chatArrayList.add(msg)
                             adapter.notifyDataSetChanged()
                         }
@@ -126,6 +132,13 @@ class ChatActivity : AppCompatActivity() {
 }
 
 // a message and the user that sent the message
-class Chat(val message: String, val user: User, val id: String) {
+class Chat(
+    val message: String,
+    val user: User,
+    val id: String,
+    val date: Any?,
+    val to: Any?,
+    val from: Any?
+) {
 
 }
