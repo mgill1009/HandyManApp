@@ -1,10 +1,7 @@
 package com.mg.handyman
 
-import android.app.Application
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +27,6 @@ class ChatViewModel : ViewModel() {
     private suspend fun runOnMainThread() {
         withContext(Main) {
             initMessageListener()
-            mutableChat.value = chatArrayList
         }
     }
 
@@ -56,6 +52,7 @@ class ChatViewModel : ViewModel() {
                                 message.id, data["date"], data["toId"], data["fromId"]
                             )
                             chatArrayList.add(msg)
+                            update()
                         }
                     }
                     else if (currentUser.uid == data["fromId"] && otherUser.uid == data["toId"]) {
@@ -67,10 +64,14 @@ class ChatViewModel : ViewModel() {
                                 User(currentUser.username, currentUser.uid),
                                 message.id, data["date"], data["toId"], data["fromId"])
                             chatArrayList.add(msg)
+                            update()
                         }
                     }
                 }
             }
         }
+    }
+    private fun update() {
+        mutableChat.value = chatArrayList
     }
 }
