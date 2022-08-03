@@ -49,10 +49,6 @@ class ChatActivity : AppCompatActivity() {
 
         listView = findViewById(R.id.chatListView)
 
-        chats = ArrayList()
-        adapter = ChatArrayAdapter(chats, this, currentUser, 1)
-        listView.adapter = adapter
-
         val chatViewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
         chatViewModel.currentUser = currentUser
         chatViewModel.otherUser = otherUser
@@ -60,7 +56,7 @@ class ChatActivity : AppCompatActivity() {
             chats = it as ArrayList<Chat>
             adapter = ChatArrayAdapter(chats, this, currentUser, 1)
             listView.adapter = adapter
-            adapter.notifyDataSetChanged()
+            listView.setSelection(adapter.count - 1)
         }
 
         messageEditText = findViewById(R.id.messageInputET)
