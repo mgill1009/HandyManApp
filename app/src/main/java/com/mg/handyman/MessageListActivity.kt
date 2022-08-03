@@ -71,11 +71,6 @@ class MessageListActivity : AppCompatActivity() {
                         if(!tmpArr.contains(User(from as String, fromId as String)))
                             tmpArr.add(User(from, fromId))
                     }
-
-                    //val id = user.data.values.first()
-                    //val name = user.data.values.last()
-                    //tmpArr.add(User(name as String, id as String))
-                    Log.d("debug", "tmp arr is ${tmpArr}")
                 }
                 users = tmpArr
                 val userNames = tmpArr.map { it.username.replace("[", "").
@@ -98,7 +93,6 @@ class MessageListActivity : AppCompatActivity() {
         }
 
         // Query 2
-
         query2.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
             // if there is an exception create a toast and close messagelist
             firebaseFirestoreException?.let {

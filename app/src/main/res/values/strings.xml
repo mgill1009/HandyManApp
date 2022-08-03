@@ -31,4 +31,8 @@
     <string name="phone_number">Phone Number</string>
     <string name="add_job">Add Job</string>
     <string name="messages">Messages</string>
+    <string name="alert_delete_posting">This listing will be removed permanently</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="ask_confirmation">Are you sure?</string>
 </resources>

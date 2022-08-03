@@ -5,17 +5,22 @@ package com.mg.handyman
  */
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.DecimalFormat
 
-class JobActivity : AppCompatActivity() {
+
+class JobActivity : AppCompatActivity(), onDeleteListener {
     private lateinit var model: Job
     private lateinit var titleTextView: TextView
     private lateinit var descriptionTextView: TextView
@@ -23,6 +28,7 @@ class JobActivity : AppCompatActivity() {
     private lateinit var serviceInfoTextView: TextView
     private lateinit var messageButton: Button
     private val decimalFormat = DecimalFormat("0.#")
+    private lateinit var auth: FirebaseAuth
 
     private lateinit var lister: User
     private val db = Firebase.firestore
@@ -35,6 +41,8 @@ class JobActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_job)
+
+        auth = Firebase.auth
 
         model = intent.getParcelableExtra<Job>(MainActivity.SELECTED_JOB) as Job
 
@@ -53,19 +61,57 @@ class JobActivity : AppCompatActivity() {
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
 
+        // Hide the message lister button for user's own listings
+        // Show 'Delete listing' option instead
+        if(model.uid == auth.currentUser?.uid){
+            messageButton.text = "Remove Listing"
 
-        lister = User(model.specialistName, model.uid)
+            // set different background color
+            messageButton.setBackgroundColor(Color.parseColor("#DA1B2B"))
 
-        //Message lister activity
-        messageButton.setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java)
-            val bundle = Bundle()
+            val params: LinearLayout.LayoutParams =
+                LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+            params.gravity = Gravity.START
 
-            bundle.putParcelable(MessageListActivity.NAME_KEY, lister)
-            intent.putExtras(bundle)
-            startActivity(intent)
+            messageButton.layoutParams = params
+
+            messageButton.setOnClickListener{
+                val dialog = CustomDialogFragment()
+                dialog.show(supportFragmentManager, "my dialog")
+            }
+
+        }else{
+            lister = User(model.specialistName, model.uid)
+
+            //Message lister activity
+            messageButton.setOnClickListener {
+                val intent = Intent(this, ChatActivity::class.java)
+                val bundle = Bundle()
+                bundle.putParcelable(MessageListActivity.NAME_KEY, lister)
+                intent.putExtras(bundle)
+                startActivity(intent)
+            }
         }
+    }
 
+    // Delete current listing from the database
+    override fun deleteListing() {
+        val deleteQuery = db.collection("jobs").whereEqualTo("uid", model.uid)
+            .whereEqualTo("title", model.title).whereEqualTo("specialistName", model.specialistName)
+            .whereEqualTo("description", model.description)
+
+        deleteQuery.get().addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                for (document in task.result!!) {
+                    document.reference.delete().addOnSuccessListener {
+                        Log.d("debug", "Document deleted successfully")
+                        finish()
+                    }.addOnFailureListener{
+                        Log.w("debug", "Error deleting document", it)
+                    }
+                }
+            }
+        }
     }
 
 }
