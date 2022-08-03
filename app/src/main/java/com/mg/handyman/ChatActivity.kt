@@ -7,6 +7,7 @@ import android.widget.ListView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
+import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -22,7 +23,7 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var sendButton: AppCompatImageButton
     private lateinit var messageEditText: EditText
     private lateinit var adapter: ChatArrayAdapter
-    private lateinit var chatArrayList: ArrayList<Chat>
+    private lateinit var chats: ArrayList<Chat>
 
     private lateinit var otherUser: User
     private lateinit var currentUser: User
@@ -46,14 +47,17 @@ class ChatActivity : AppCompatActivity() {
             auth.currentUser!!.uid
         )
 
-        chatArrayList = arrayListOf()
-
-        adapter = ChatArrayAdapter(chatArrayList, this, currentUser, 1)
-
-        initMessageListener()
-
         listView = findViewById(R.id.chatListView)
-        listView.adapter = adapter
+
+        val chatViewModel = ViewModelProvider(this).get(ChatViewModel::class.java)
+        chatViewModel.currentUser = currentUser
+        chatViewModel.otherUser = otherUser
+        chatViewModel.mutableChat.observe(this) {
+            chats = it as ArrayList<Chat>
+            adapter = ChatArrayAdapter(chats, this, currentUser, 1)
+            listView.adapter = adapter
+            listView.setSelection(adapter.count - 1)
+        }
 
         messageEditText = findViewById(R.id.messageInputET)
 
@@ -63,49 +67,6 @@ class ChatActivity : AppCompatActivity() {
         }
 
     }
-
-    private fun initMessageListener() {
-        val query = db.collection("messages").orderBy("date")   // sort chat by date created
-        query.addSnapshotListener { querySnapshot, firebaseFirestoreException ->
-            // if there is an exception create a toast and close messagelist
-            firebaseFirestoreException?.let {
-                Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
-                finish()
-            }
-            querySnapshot?.let {
-                for (message in it) {
-                    val data = message.data as HashMap<String, Any>
-                    if (currentUser.uid == data["toId"] && otherUser.uid == data["fromId"]) {
-                        // if the message is already in the list then do not add it
-                        if ((chatArrayList.filter { chat -> chat.id == message.id }).isNotEmpty()) {
-                            continue
-                        } else {
-                            val msg = Chat(
-                                data["text"] as String,
-                                User(otherUser.username, otherUser.uid),
-                                message.id, data["date"], data["toId"], data["fromId"]
-                            )
-                            chatArrayList.add(msg)
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-                    else if (currentUser.uid == data["fromId"] && otherUser.uid == data["toId"]) {
-                        // if the message is already in the list then do not add it
-                        if ((chatArrayList.filter { chat -> chat.id == message.id }).isNotEmpty()) {
-                            continue
-                        } else {
-                            val msg = Chat(data["text"] as String,
-                                User(currentUser.username, currentUser.uid),
-                                message.id, data["date"], data["toId"], data["fromId"])
-                            chatArrayList.add(msg)
-                            adapter.notifyDataSetChanged()
-                        }
-                    }
-                }
-            }
-        }
-    }
-
 
     private fun sendMessage() {
         val text = messageEditText.text.toString()
