@@ -4,11 +4,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserPostActivity">
     <item
-        android:id="@+id/logoutBtn"
-        android:title="@string/logout"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/postBtn"
         android:title="@string/post"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/logoutBtn"
+        android:title="@string/logout"
+        app:showAsAction="never" />
 </menu>

@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 
 
@@ -66,7 +67,8 @@ class MainActivity : AppCompatActivity() {
      * RecyclerView
      */
     private fun populateJobs() {
-        val query = db.collection("jobs")
+
+        val query = runBlocking { db.collection("jobs")  }
 
         val options = FirestoreRecyclerOptions.Builder<Job>().setQuery(query, Job::class.java)
             .setLifecycleOwner(this).build()

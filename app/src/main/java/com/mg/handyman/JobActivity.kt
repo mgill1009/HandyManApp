@@ -25,11 +25,7 @@ class JobActivity : AppCompatActivity() {
     private val decimalFormat = DecimalFormat("0.#")
 
     private lateinit var lister: User
-    private lateinit var users: MutableList<User>
-    private lateinit var jobUid: String
     private val db = Firebase.firestore
-
-//    private lateinit var users: MutableList<User>
 
     companion object{
         private const val TAG = "JobActivity"
