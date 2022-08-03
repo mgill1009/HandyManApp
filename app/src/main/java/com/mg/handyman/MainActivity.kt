@@ -15,6 +15,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.runBlocking
@@ -37,6 +39,9 @@ class MainActivity : AppCompatActivity() {
     private val decimalFormat = DecimalFormat("0.#")
 
     private val db = Firebase.firestore
+    private val query = db.collection("jobs")
+    private lateinit var query2: Query
+    private var allListings = true
 
     private lateinit var addJobButton: Button
 
@@ -60,15 +65,15 @@ class MainActivity : AppCompatActivity() {
         val message = "Hi ${currentUser?.displayName}"
         welcomeTextView.text = message
 
-        populateJobs()
+        // Query all jobs from the database in a background thread and populate recyclerView
+        val query = runBlocking { db.collection("jobs")  }
+        populateJobs(query)
     }
 
     /** Retrieve the collection currently posted jobs from Firestore and populate the
      * RecyclerView
      */
-    private fun populateJobs() {
-
-        val query = runBlocking { db.collection("jobs")  }
+    private fun populateJobs(query: Query) {
 
         val options = FirestoreRecyclerOptions.Builder<Job>().setQuery(query, Job::class.java)
             .setLifecycleOwner(this).build()
@@ -141,13 +146,27 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
         } else if(item.itemId == R.id.myListingsBtn){
-            // TODO
+            if(allListings){
+                // now we want to show only mylistings
+                item.title = getString(R.string.all_listings)
+                query2 = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid)
+                populateJobs(query2)
+                allListings = false
+            }else{
+                // now we want to show all listings
+                item.title = getString(R.string.my_listings)
+                populateJobs(query)
+                allListings = true
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onResume() {
         super.onResume()
-        populateJobs()
+        if(allListings)
+            populateJobs(query)
+        else
+            populateJobs(query2)
     }
 }

@@ -35,4 +35,6 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="ask_confirmation">Are you sure?</string>
+    <string name="all_listings">All Listings</string>
+    <string name="my_listings">My Listings</string>
 </resources>
