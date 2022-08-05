@@ -4,6 +4,7 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
@@ -47,12 +48,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var searchQuery: Query
     private var allListings = true
     private var searched = false
-
-    private lateinit var addJobButton: Button
+    private lateinit var searchedTitle: String
 
     companion object{
         private const val TAG = "MainActivity"
         const val SELECTED_JOB = "Selected job"
+        private const val ALL_LISTINGS = "All listings"
+        private const val SEARCHED = "Searched"
+        private const val SEARCH_TITLE = "Search title"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -111,6 +114,7 @@ class MainActivity : AppCompatActivity() {
             val upper = queryMessage.uppercase()
             val capitalize = lower.replaceFirstChar { it.uppercase() }
             val list: MutableList<String> = mutableListOf(lower, upper, capitalize)
+            searchedTitle = queryMessage
             searchQuery = db.collection("jobs").whereIn("title", list)
             populateJobs(searchQuery)
         }
@@ -252,6 +256,29 @@ class MainActivity : AppCompatActivity() {
                 populateJobs(query)
             else
                 populateJobs(query2)
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean(ALL_LISTINGS, allListings)
+        outState.putBoolean(SEARCHED, searched)
+        if(searched){
+            outState.putString(SEARCH_TITLE, searchedTitle)
+        }
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        allListings = savedInstanceState.getBoolean(ALL_LISTINGS)
+        searched = savedInstanceState.getBoolean(SEARCHED)
+
+        if(!allListings){
+            query2 = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid)
+            populateJobs(query2)
+        }
+        if(searched){
+            doMySearch(savedInstanceState.getString(SEARCH_TITLE))
         }
     }
 }
