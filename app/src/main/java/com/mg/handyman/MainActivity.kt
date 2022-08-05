@@ -64,8 +64,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayUseLogoEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        Log.d("debug", "inside onCreate")
-
         welcomeTextView = findViewById(R.id.welcome_tv)
         rvJobs = findViewById(R.id.rv_jobs)
 
@@ -81,8 +79,6 @@ class MainActivity : AppCompatActivity() {
                 message += word[0]
             }
         }
-        Log.d("debug", "Message is $message")
-
         welcomeTextView.text = message
 
         // Query all jobs from the database in a background thread and populate recyclerView
@@ -91,15 +87,15 @@ class MainActivity : AppCompatActivity() {
         handleIntent(intent)
     }
 
+    // set new intent and check if its an action search
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        Log.d("debug", "Inside OnNewIntent")
         setIntent(intent)
         handleIntent(intent)
     }
 
+    // If the intent has action search, retrieve the search query
     private fun handleIntent(intent: Intent){
-        Log.d("debug", "inside handleIntent")
         if(Intent.ACTION_SEARCH == intent.action){
             intent.getStringExtra(SearchManager.QUERY).also { query ->
                 doMySearch(query)
@@ -108,20 +104,22 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun doMySearch(queryMessage: String?) {
-        Log.d("debug", "inside doMySearch")
-        // TODO call populate jobs with app query
+        // call populate jobs with search query
         searched = queryMessage != ""
-
-        searchQuery = db.collection("jobs").whereEqualTo("title", queryMessage)
-        populateJobs(searchQuery)
-        Log.d("debug", "Search query is $queryMessage")
+        if(queryMessage != ""){
+            val lower = queryMessage!!.lowercase()
+            val upper = queryMessage.uppercase()
+            val capitalize = lower.replaceFirstChar { it.uppercase() }
+            val list: MutableList<String> = mutableListOf(lower, upper, capitalize)
+            searchQuery = db.collection("jobs").whereIn("title", list)
+            populateJobs(searchQuery)
+        }
     }
 
     /** Retrieve the collection of jobs from Firestore and populate the
      * RecyclerView
      */
     private fun populateJobs(query: Query) {
-        Log.d("debug", "inside populateJobs")
         val options = FirestoreRecyclerOptions.Builder<Job>().setQuery(query, Job::class.java)
             .setLifecycleOwner(this).build()
 
@@ -184,7 +182,7 @@ class MainActivity : AppCompatActivity() {
             isIconifiedByDefault = false
         }
 
-
+        // listens to text change in search query
         val textChangeListener: SearchView.OnQueryTextListener =
             object : SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
@@ -197,6 +195,7 @@ class MainActivity : AppCompatActivity() {
                         Log.d("debug", "Search box is cleared")
                         searched = false
 
+                        // When search box is cleared, switch back to All Listings or My Listings
                         if(allListings)
                             populateJobs(query)
                         else
