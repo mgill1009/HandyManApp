@@ -2,6 +2,12 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_search"
+        app:showAsAction="always"
+        android:icon="@drawable/ic_search"
+        app:actionViewClass="android.widget.SearchView"
+        android:title="@string/search" />
+    <item
         android:id="@+id/messagesBtn"
         android:title="@string/messages"
         app:showAsAction="ifRoom" />

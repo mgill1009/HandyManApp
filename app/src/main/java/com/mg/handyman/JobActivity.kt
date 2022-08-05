@@ -42,6 +42,10 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_job)
 
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setLogo(R.mipmap.ic_title_1)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
+
         auth = Firebase.auth
 
         model = intent.getParcelableExtra<Job>(MainActivity.SELECTED_JOB) as Job

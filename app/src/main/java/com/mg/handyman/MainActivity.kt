@@ -1,11 +1,15 @@
 package com.mg.handyman
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -15,7 +19,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -41,7 +44,9 @@ class MainActivity : AppCompatActivity() {
     private val db = Firebase.firestore
     private val query = db.collection("jobs")
     private lateinit var query2: Query
+    private lateinit var searchQuery: Query
     private var allListings = true
+    private var searched = false
 
     private lateinit var addJobButton: Button
 
@@ -54,6 +59,13 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setLogo(R.mipmap.ic_title_1)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        Log.d("debug", "inside onCreate")
+
         welcomeTextView = findViewById(R.id.welcome_tv)
         rvJobs = findViewById(R.id.rv_jobs)
 
@@ -62,19 +74,54 @@ class MainActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
 
         // display logged in user's name
-        val message = "Hi ${currentUser?.displayName}"
+        val name = currentUser?.displayName
+        var message = ""
+        if (name != null) {
+            for(word in name.split(" ")){
+                message += word[0]
+            }
+        }
+        Log.d("debug", "Message is $message")
+
         welcomeTextView.text = message
 
         // Query all jobs from the database in a background thread and populate recyclerView
         val query = runBlocking { db.collection("jobs")  }
         populateJobs(query)
+        handleIntent(intent)
     }
 
-    /** Retrieve the collection currently posted jobs from Firestore and populate the
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        Log.d("debug", "Inside OnNewIntent")
+        setIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent){
+        Log.d("debug", "inside handleIntent")
+        if(Intent.ACTION_SEARCH == intent.action){
+            intent.getStringExtra(SearchManager.QUERY).also { query ->
+                doMySearch(query)
+            }
+        }
+    }
+
+    private fun doMySearch(queryMessage: String?) {
+        Log.d("debug", "inside doMySearch")
+        // TODO call populate jobs with app query
+        searched = queryMessage != ""
+
+        searchQuery = db.collection("jobs").whereEqualTo("title", queryMessage)
+        populateJobs(searchQuery)
+        Log.d("debug", "Search query is $queryMessage")
+    }
+
+    /** Retrieve the collection of jobs from Firestore and populate the
      * RecyclerView
      */
     private fun populateJobs(query: Query) {
-
+        Log.d("debug", "inside populateJobs")
         val options = FirestoreRecyclerOptions.Builder<Job>().setQuery(query, Job::class.java)
             .setLifecycleOwner(this).build()
 
@@ -127,7 +174,42 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
+
+        // Get the SearchView and set the searchable configuration
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchView = (menu?.findItem(R.id.menu_search)?.actionView as SearchView)
+        searchView.apply {
+            maxWidth = 750
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+            isIconifiedByDefault = false
+        }
+
+
+        val textChangeListener: SearchView.OnQueryTextListener =
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(cs: String): Boolean {
+                    if (TextUtils.isEmpty(cs)) {
+                        //Text is cleared, do your thing
+                        Log.d("debug", "Search box is cleared")
+                        searched = false
+
+                        if(allListings)
+                            populateJobs(query)
+                        else
+                            populateJobs(query2)
+
+                    }
+                    return false
+                }
+            }
+
+        searchView.setOnQueryTextListener(textChangeListener)
+
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -164,9 +246,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(allListings)
-            populateJobs(query)
-        else
-            populateJobs(query2)
+        if(searched)
+            populateJobs(searchQuery)
+        else{
+            if(allListings)
+                populateJobs(query)
+            else
+                populateJobs(query2)
+        }
     }
 }

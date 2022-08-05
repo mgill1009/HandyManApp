@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/drawable/background_message_input.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable/ic_send.xml" value="0.1085" />
         <entry key="app/src/main/res/drawable/message_item_right.xml" value="0.1085" />
+        <entry key="app/src/main/res/drawable/round_button.xml" value="0.1095" />
         <entry key="app/src/main/res/drawable/textview_border.xml" value="0.1065" />
         <entry key="app/src/main/res/layout/activity_chat.xml" value="0.15489130434782608" />
         <entry key="app/src/main/res/layout/activity_email_login.xml" value="0.11684782608695653" />
@@ -23,6 +24,7 @@
         <entry key="app/src/main/res/layout/textview_border.xml" value="0.10572916666666667" />
         <entry key="app/src/main/res/menu/menu_main.xml" value="0.19010416666666666" />
         <entry key="app/src/main/res/menu/menu_post.xml" value="0.19114583333333332" />
+        <entry key="app/src/main/res/xml/searchable.xml" value="0.134375" />
       </map>
     </option>
   </component>
