@@ -9,10 +9,9 @@ import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -31,11 +30,12 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
     private lateinit var auth: FirebaseAuth
 
     private lateinit var lister: User
+    private lateinit var ratingBar: RatingBar
+    private lateinit var ratingButton: Button
     private val db = Firebase.firestore
 
     companion object{
         private const val TAG = "JobActivity"
-        val NAME_KEY = "NAME_KEY"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +52,8 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
 
         Log.d(TAG, "Got ${model.title}")
 
+        ratingBar = findViewById(R.id.rating_bar)
+        ratingButton =  findViewById(R.id.rating_btn)
         titleTextView = findViewById(R.id.title_tv)
         descriptionTextView = findViewById(R.id.description_tv)
         infoTextView = findViewById(R.id.info_tv)
@@ -65,10 +67,34 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
 
-        // Hide the message lister button for user's own listings
+        ratingButton.setOnClickListener{
+            val numStars = ratingBar.rating
+            // update rating to the database
+            val updateQuery = db.collection("jobs").whereEqualTo("uid", model.uid)
+                .whereEqualTo("title", model.title).whereEqualTo("specialistName", model.specialistName)
+                .whereEqualTo("description", model.description)
+
+            val newRating = ((model.rating * model.timesRated) + numStars.toDouble()) / (model.timesRated + 1)
+            model.timesRated = model.timesRated + 1
+            model.rating = newRating
+
+            updateQuery.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    for (document in task.result!!) {
+                        document.reference.set(model)
+                    }
+                }
+            }
+            Toast.makeText(this, "Thank you for the rating!", Toast.LENGTH_SHORT).show()
+
+        }
+
+
+        // Hide the "Message Lister" button for user's own listings
         // Show 'Delete listing' option instead
+
         if(model.uid == auth.currentUser?.uid){
-            messageButton.text = "Remove Listing"
+            messageButton.text = getString(R.string.remove_listing)
 
             // set different background color
             messageButton.setBackgroundColor(Color.parseColor("#DA1B2B"))
@@ -83,6 +109,10 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
                 val dialog = CustomDialogFragment()
                 dialog.show(supportFragmentManager, "my dialog")
             }
+
+            // Hide rating option for user's own listing
+            ratingBar.isVisible = false
+            ratingButton.isVisible = false
 
         }else{
             lister = User(model.specialistName, model.uid)

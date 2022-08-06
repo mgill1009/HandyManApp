@@ -38,4 +38,6 @@
     <string name="all_listings">All Listings</string>
     <string name="my_listings">My Listings</string>
     <string name="search_hint">e.g. Plumber</string>
+    <string name="rate">Rate</string>
+    <string name="remove_listing">Remove Listing</string>
 </resources>

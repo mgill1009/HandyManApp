@@ -10,4 +10,5 @@
     <color name="left_message_item">#E2E2DF</color>
     <color name="right_message_item">#2568E4</color>
     <color name="user_post_button_color">#2568E4</color>
+    <color name="rating_button_color">#795E53</color>
 </resources>

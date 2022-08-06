@@ -13,5 +13,7 @@ data class Job(
     val description: String = "",
     val location: String = "Burnaby, BC",
     val pictureId: Int = R.drawable.job,
-    val uid: String = ""
+    val uid: String = "",
+    var rating: Double = 0.0,
+    var timesRated: Int = 0
 ): Parcelable

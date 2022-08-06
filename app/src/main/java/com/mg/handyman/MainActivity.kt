@@ -8,11 +8,9 @@ import android.os.PersistableBundle
 import android.text.TextUtils
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -143,6 +141,7 @@ class MainActivity : AppCompatActivity() {
                 val priceTV: TextView = holder.itemView.findViewById(R.id.price_textView)
                 val durationTV: TextView = holder.itemView.findViewById(R.id.duration_textView)
                 val locationTV: TextView = holder.itemView.findViewById(R.id.location_textView)
+                val ratingTV: TextView = holder.itemView.findViewById(R.id.rating_textView)
 
                 nameTV.text = model.specialistName
                 jobTitleTV.text = model.title
@@ -152,6 +151,15 @@ class MainActivity : AppCompatActivity() {
                 durationTV.text = duration
                 locationTV.text = model.location
                 imageView.setImageResource(model.pictureId)
+
+                if(model.rating > 0){
+                    val ratingBar = holder.itemView.findViewById<RatingBar>(R.id.show_rating_bar)
+                    ratingBar.isVisible = true
+                    ratingBar.rating = model.rating.toFloat()
+
+                    val rating = "${decimalFormat.format(model.rating)}"
+                    ratingTV.text = rating
+                }
 
                 // Opens selected job in a new activity
                 holder.itemView.setOnClickListener{

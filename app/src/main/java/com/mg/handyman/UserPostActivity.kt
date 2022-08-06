@@ -99,6 +99,8 @@ class UserPostActivity : AppCompatActivity() {
             "location" to location,
             "phone" to phone,
             "pictureId" to spinner.selectedItem,
+            "rating" to 0,
+            "timesRated" to 0,
             "uid" to (auth.currentUser?.uid ?: "")
         )
 
