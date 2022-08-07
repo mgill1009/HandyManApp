@@ -2,6 +2,7 @@ package com.mg.handyman
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.AbsListView
 import android.widget.EditText
 import android.widget.ListView
 import android.widget.Toast
@@ -56,6 +57,8 @@ class ChatActivity : AppCompatActivity() {
             chats = it as ArrayList<Chat>
             adapter = ChatArrayAdapter(chats, this, currentUser, 1)
             listView.adapter = adapter
+            // Reference: https://stackoverflow.com/questions/3606530/listview-scroll-to-the-end-of-the-list-after-updating-the-list#:~:text=lv.setTranscriptMode(AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL)
+            listView.transcriptMode = AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL
             listView.setSelection(adapter.count - 1)
         }
 
