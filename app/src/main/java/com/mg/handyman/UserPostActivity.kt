@@ -89,6 +89,12 @@ class UserPostActivity : AppCompatActivity() {
         val phone = phoneET.text.toString().toLong()
         val location = locationET.text.toString()
 
+        val titleArray = ArrayList<String>()
+        val t = jobTitle.lowercase()
+        for (i in t.indices){
+            titleArray.add(t.substring(0, i))
+        }
+
         // create a new job with provided entries
         val job = hashMapOf(
             "title" to jobTitle,
@@ -101,7 +107,8 @@ class UserPostActivity : AppCompatActivity() {
             "pictureId" to spinner.selectedItem,
             "rating" to 0,
             "timesRated" to 0,
-            "uid" to (auth.currentUser?.uid ?: "")
+            "uid" to (auth.currentUser?.uid ?: ""),
+            "titleAsArray" to titleArray
         )
 
         // Add a new job entry to Firestore with a generated ID

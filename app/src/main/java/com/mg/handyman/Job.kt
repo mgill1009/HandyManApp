@@ -15,5 +15,6 @@ data class Job(
     val pictureId: Int = R.drawable.job,
     val uid: String = "",
     var rating: Double = 0.0,
-    var timesRated: Int = 0
+    var timesRated: Int = 0,
+    var titleAsArray: ArrayList<String> = ArrayList()
 ): Parcelable

@@ -109,11 +109,9 @@ class MainActivity : AppCompatActivity() {
         searched = queryMessage != ""
         if(queryMessage != ""){
             val lower = queryMessage!!.lowercase()
-            val upper = queryMessage.uppercase()
-            val capitalize = lower.replaceFirstChar { it.uppercase() }
-            val list: MutableList<String> = mutableListOf(lower, upper, capitalize)
             searchedTitle = queryMessage
-            searchQuery = db.collection("jobs").whereIn("title", list)
+            searchQuery = db.collection("jobs").whereArrayContains("titleAsArray", lower)
+
             populateJobs(searchQuery)
         }
     }
@@ -213,6 +211,8 @@ class MainActivity : AppCompatActivity() {
                         else
                             populateJobs(query2)
 
+                    }else{
+                        doMySearch(cs)
                     }
                     return false
                 }
