@@ -17,6 +17,8 @@
         <entry key="app/src/main/res/layout/activity_message_list.xml" value="0.15489130434782608" />
         <entry key="app/src/main/res/layout/activity_sign_up.xml" value="0.15806159420289856" />
         <entry key="app/src/main/res/layout/activity_user_post.xml" value="0.17844202898550723" />
+        <entry key="app/src/main/res/layout/chat_row.xml" value="0.14764492753623187" />
+        <entry key="app/src/main/res/layout/contact_list_item.xml" value="0.14764492753623187" />
         <entry key="app/src/main/res/layout/content_spinner.xml" value="0.14855072463768115" />
         <entry key="app/src/main/res/layout/job_list_item.xml" value="0.14855072463768115" />
         <entry key="app/src/main/res/layout/message_left.xml" value="0.15489130434782608" />
