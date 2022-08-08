@@ -265,6 +265,7 @@ class MainActivity : AppCompatActivity() {
         if (item.itemId == R.id.addJobBtn) {
             val intent = Intent(this, UserPostActivity::class.java)
             startActivity(intent)
+            sortByNewestBtn.isChecked = false
         } else if(item.itemId == R.id.logoutBtn) {
             Log.i(TAG, "Logout")
             // Logout the user
@@ -273,12 +274,15 @@ class MainActivity : AppCompatActivity() {
             // clear the entire back stack
             logOutIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(logOutIntent)
+            sortByNewestBtn.isChecked = false
         } else if (item.itemId == R.id.messagesBtn) {
             val intent = Intent(this, MessageListActivity::class.java)
             startActivity(intent)
+            sortByNewestBtn.isChecked = false
         } else if(item.itemId == R.id.myListingsBtn){
             if(allListings){
                 sortByNewestBtn.isVisible = true
+                sortByNewestBtn.isChecked = false
                 // now we want to show only mylistings
                 item.title = getString(R.string.all_listings)
                 query2 = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid)
@@ -286,6 +290,7 @@ class MainActivity : AppCompatActivity() {
                 allListings = false
             }else{
                 sortByNewestBtn.isVisible = true
+                sortByNewestBtn.isChecked = false
                 // now we want to show all listings
                 item.title = getString(R.string.my_listings)
                 populateJobs(query)
