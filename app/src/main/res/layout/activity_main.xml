@@ -32,15 +32,32 @@
 
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="5dp"
-        android:text="@string/currently_posted_listings"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:padding="10dp"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:textSize="20sp"
+            android:layout_marginTop="5dp"
+            android:text="@string/currently_posted_listings"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:padding="10dp"/>
+
+        <CheckBox
+            android:id="@+id/sortByNewestBtn"
+            android:layout_weight="0.4"
+            android:layout_marginTop="4dp"
+            android:paddingTop="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_by_newest">
+        </CheckBox>
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_jobs"
@@ -51,3 +68,16 @@
          android:layout_weight="1"/>
 
 </LinearLayout>
+
+    <!--<androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/sortByDateBtn"
+                android:contextClickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:layout_weight="0.1"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/sort"
+                android:minHeight="48dp"
+                android:src="@drawable/ic_baseline_sort"
+                android:tint="@color/user_post_button_color" />-->

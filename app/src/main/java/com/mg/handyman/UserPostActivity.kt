@@ -14,6 +14,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.sql.Timestamp
+import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.properties.Delegates
 
 class UserPostActivity : AppCompatActivity() {
@@ -95,6 +98,8 @@ class UserPostActivity : AppCompatActivity() {
             titleArray.add(t.substring(0, i))
         }
 
+        val createdAt = com.google.firebase.Timestamp(Date())
+
         // create a new job with provided entries
         val job = hashMapOf(
             "title" to jobTitle,
@@ -108,7 +113,8 @@ class UserPostActivity : AppCompatActivity() {
             "rating" to 0,
             "timesRated" to 0,
             "uid" to (auth.currentUser?.uid ?: ""),
-            "titleAsArray" to titleArray
+            "titleAsArray" to titleArray,
+            "createdAt" to createdAt
         )
 
         // Add a new job entry to Firestore with a generated ID

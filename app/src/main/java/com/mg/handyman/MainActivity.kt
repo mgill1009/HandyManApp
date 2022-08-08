@@ -21,6 +21,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.runBlocking
 import java.text.DecimalFormat
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var welcomeTextView: TextView
     private lateinit var rvJobs: RecyclerView
+    private lateinit var sortBtn: Button
 
     private val decimalFormat = DecimalFormat("0.#")
 
@@ -44,6 +46,8 @@ class MainActivity : AppCompatActivity() {
     private val query = db.collection("jobs")
     private lateinit var query2: Query
     private lateinit var searchQuery: Query
+    private lateinit var sortedQuery: Query
+    private lateinit var sortedMyQuery: Query
     private var allListings = true
     private var searched = false
     private lateinit var searchedTitle: String
@@ -65,6 +69,8 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayUseLogoEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+
+        sortBtn = findViewById(R.id.sortByNewestBtn)
         welcomeTextView = findViewById(R.id.welcome_tv)
         rvJobs = findViewById(R.id.rv_jobs)
 
@@ -86,6 +92,30 @@ class MainActivity : AppCompatActivity() {
         val query = runBlocking { db.collection("jobs")  }
         populateJobs(query)
         handleIntent(intent)
+        sortByNewestBtn.setOnClickListener {
+            if (searched) {
+                sortByNewestBtn.isClickable = false
+            } else {
+                if (sortByNewestBtn.isChecked) {
+                    if (!allListings) {
+                        sortedMyQuery = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid).orderBy("createdAt", Query.Direction.DESCENDING)
+                        populateJobs(sortedMyQuery)
+                    } else {
+                        sortedQuery = runBlocking { db.collection("jobs").orderBy("createdAt", Query.Direction.DESCENDING)  }
+                        populateJobs(sortedQuery)
+                    }
+                } else {
+                    if (!allListings) {
+                        sortedMyQuery = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid)
+                        populateJobs(sortedMyQuery)
+                    } else {
+                        populateJobs(query)
+                    }
+                }
+            }
+        }
+
+
     }
 
     // set new intent and check if its an action search
@@ -106,12 +136,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun doMySearch(queryMessage: String?) {
         // call populate jobs with search query
+        sortByNewestBtn.isVisible = false
+        //sortByNewestBtn.isClickable = false
         searched = queryMessage != ""
         if(queryMessage != ""){
             val lower = queryMessage!!.lowercase()
             searchedTitle = queryMessage
             searchQuery = db.collection("jobs").whereArrayContains("titleAsArray", lower)
-
             populateJobs(searchQuery)
         }
     }
@@ -204,14 +235,17 @@ class MainActivity : AppCompatActivity() {
                         //Text is cleared, do your thing
                         Log.d("debug", "Search box is cleared")
                         searched = false
-
                         // When search box is cleared, switch back to All Listings or My Listings
-                        if(allListings)
+                        if(allListings){
                             populateJobs(query)
-                        else
+                            sortByNewestBtn.isVisible = true
+                            sortByNewestBtn.isClickable = true
+                        } else {
+                            //sortByNewestBtn.isVisible = false
                             populateJobs(query2)
-
-                    }else{
+                        }
+                    } else{
+                        sortByNewestBtn.isVisible = false
                         doMySearch(cs)
                     }
                     return false
@@ -240,12 +274,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         } else if(item.itemId == R.id.myListingsBtn){
             if(allListings){
+                sortByNewestBtn.isVisible = true
                 // now we want to show only mylistings
                 item.title = getString(R.string.all_listings)
                 query2 = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid)
                 populateJobs(query2)
                 allListings = false
             }else{
+                sortByNewestBtn.isVisible = true
                 // now we want to show all listings
                 item.title = getString(R.string.my_listings)
                 populateJobs(query)
@@ -257,14 +293,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if(searched)
+        if(searched) {
             populateJobs(searchQuery)
-        else{
-            if(allListings)
+            sortByNewestBtn.isClickable = false
+        } else {
+            if(allListings) {
                 populateJobs(query)
-            else
+                sortByNewestBtn.isClickable = true
+            } else {
                 populateJobs(query2)
+                sortByNewestBtn.isClickable = true
+            }
         }
+
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -284,8 +325,10 @@ class MainActivity : AppCompatActivity() {
         if(!allListings){
             query2 = db.collection("jobs").whereEqualTo("uid", auth.currentUser?.uid)
             populateJobs(query2)
+            //sortByNewestBtn.isClickable = false
         }
         if(searched){
+            sortByNewestBtn.isClickable = false
             doMySearch(savedInstanceState.getString(SEARCH_TITLE))
         }
     }
