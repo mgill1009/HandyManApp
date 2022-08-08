@@ -3,10 +3,13 @@ package com.mg.handyman
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.DialogFragment
+
+/**
+ * Dialog pop-up that confirms if the user wants to delete their posting
+ */
 
 interface onDeleteListener{
     fun deleteListing()

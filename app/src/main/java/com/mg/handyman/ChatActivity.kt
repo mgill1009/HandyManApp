@@ -18,6 +18,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+/**
+ * This activity lets the user chat with any other user
+ * viewmodel observes changes in the adapter and refreshes chat messages
+ * as they are coming
+ */
+
 class ChatActivity : AppCompatActivity() {
 
     private lateinit var listView: ListView

@@ -10,6 +10,12 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
+/**
+ * ViewModel to show chat conversation with a user
+ * Observes changes in the chatAdapter and refreshes as new messages are
+ * coming
+ */
+
 class ChatViewModel : ViewModel() {
 
     private val db = Firebase.firestore

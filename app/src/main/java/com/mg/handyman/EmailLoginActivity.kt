@@ -13,6 +13,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
+/**
+ * This activity lets the user login if they
+ * already have an account - using their email and password
+ * authenticates with Firebase
+ */
+
 class EmailLoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var loginButton: Button

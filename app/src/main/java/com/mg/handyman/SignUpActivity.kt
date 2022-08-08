@@ -18,6 +18,11 @@ import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+/**
+ * This activity allows the user to signup for an account
+ * using their email and password
+ */
+
 class SignUpActivity : AppCompatActivity() {
     private lateinit var signUpButton: Button
     private lateinit var signInTextView: TextView
@@ -49,7 +54,6 @@ class SignUpActivity : AppCompatActivity() {
             val firstName = findViewById<EditText>(R.id.firstName_editText).text
             val lastName = findViewById<EditText>(R.id.lastName_editText).text
 
-            Log.d(TAG, "Email is ${email.toString()}")
 
             if(!isValidEmail(email.toString())){
                 Toast.makeText(this, "Please enter a valid email",
@@ -123,7 +127,6 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if(user == null){
-            // TODO
             // no access
         }else{
             val intent = Intent(this, MainActivity::class.java)
