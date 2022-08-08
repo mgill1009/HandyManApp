@@ -40,4 +40,6 @@
     <string name="search_hint">e.g. Plumber</string>
     <string name="rate">Rate</string>
     <string name="remove_listing">Remove Listing</string>
+    <string name="sort">sortByDate</string>
+    <string name="sort_by_newest">Sort By Newest</string>
 </resources>
