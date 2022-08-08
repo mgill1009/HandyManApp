@@ -195,6 +195,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(it.context, JobActivity::class.java)
                     intent.putExtra(SELECTED_JOB, model)
                     it.context.startActivity(intent)
+                    sortByNewestBtn.isChecked = false
                 }
             }
         }
