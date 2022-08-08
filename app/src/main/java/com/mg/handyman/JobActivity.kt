@@ -1,7 +1,10 @@
 package com.mg.handyman
 
 /**
- * Shows a particular job details
+ * This activity shows a particular job details
+ * User has option to rate a particular listing (except their own) or message the lister
+ * If user is viewing their own listing, they have an option to 'delete' listing
+ * from this screen
  */
 
 import android.content.Intent
@@ -50,8 +53,6 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
 
         model = intent.getParcelableExtra<Job>(MainActivity.SELECTED_JOB) as Job
 
-        Log.d(TAG, "Got ${model.title}")
-
         ratingBar = findViewById(R.id.rating_bar)
         ratingButton =  findViewById(R.id.rating_btn)
         titleTextView = findViewById(R.id.title_tv)
@@ -67,6 +68,7 @@ class JobActivity : AppCompatActivity(), onDeleteListener {
         serviceInfoTextView.text = serviceInfo
         descriptionTextView.text = model.description
 
+        // Get user's rating, calculate the new rating and update the database
         ratingButton.setOnClickListener{
             val numStars = ratingBar.rating
             // update rating to the database

@@ -13,6 +13,9 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
+/**
+ * Adapter that fills the chat messages in the chat window
+ */
 internal class ChatArrayAdapter(private var chatList: ArrayList<Chat>,
                                 private val activity: FragmentActivity,
                                 private val currentUser : User,

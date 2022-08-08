@@ -21,6 +21,13 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
+/**
+ * This is launcher activity that presents login option to the user
+ * if the user already logged into the app before, this screen is skipped
+ * and user is directed to the MainActivity
+ * this screen provides option to Login with Email/password, Sign up, Sign in with Google
+ */
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var loginButton: Button
@@ -45,11 +52,13 @@ class LoginActivity : AppCompatActivity() {
         signupButton = findViewById(R.id.signUp_btn)
         googleSignInButton = findViewById(R.id.google_sign_in_btn)
 
+        // when login button is clicked
         loginButton.setOnClickListener{
             val intent = Intent(this, EmailLoginActivity::class.java)
             startActivity(intent)
         }
 
+        // when signup button is clicked
         signupButton.setOnClickListener{
             val intent = Intent(this, SignUpActivity::class.java)
             startActivity(intent)
@@ -79,13 +88,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun updateUI(currentUser: FirebaseUser?) {
-        // TODO -
         if (currentUser == null){
             Log.w(TAG, "User is null, not going to navigate")
             return
         }
         startActivity(Intent(this, MainActivity::class.java))
-        finish()  // don't return to the login activity
+        finish()  // don't return to the login activity, remove it from back stack
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

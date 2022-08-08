@@ -29,8 +29,10 @@ import java.text.DecimalFormat
 class JobViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
 
 /**
+ * This is the main screen of the app
  * A list of all jobs will be displayed in this activity
  * Only logged in users can view this screen
+ * User can select options to view messages, post a new job, view user's listings from the menu options
  */
 
 class MainActivity : AppCompatActivity() {
@@ -78,7 +80,7 @@ class MainActivity : AppCompatActivity() {
 
         val currentUser = auth.currentUser
 
-        // display logged in user's name
+        // display logged in user's initials
         val name = currentUser?.displayName
         var message = ""
         if (name != null) {
@@ -115,7 +117,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
     }
 
     // set new intent and check if its an action search
@@ -134,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // create the search query based on the search string and pass it to populateJobs
     private fun doMySearch(queryMessage: String?) {
         // call populate jobs with search query
         sortByNewestBtn.isVisible = false
@@ -231,9 +233,10 @@ class MainActivity : AppCompatActivity() {
                     return false
                 }
 
+                // update jobs as search query text changes
                 override fun onQueryTextChange(cs: String): Boolean {
                     if (TextUtils.isEmpty(cs)) {
-                        //Text is cleared, do your thing
+                        //Text is cleared, populate jobs with normal query
                         Log.d("debug", "Search box is cleared")
                         searched = false
                         // When search box is cleared, switch back to All Listings or My Listings
@@ -292,6 +295,7 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    // populate recyclerView
     override fun onResume() {
         super.onResume()
         if(searched) {
@@ -309,6 +313,8 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    // save the choice made by user -> if user is viewing his own listings or all listings or filtered
+    // listings
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putBoolean(ALL_LISTINGS, allListings)

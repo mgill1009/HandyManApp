@@ -7,6 +7,10 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 
+/**
+ * Adapter class to populate images representing job type when user is posting a new job
+ */
+
 class SpinnerAdapter(var context: Context, var images: ArrayList<Int>) : BaseAdapter() {
 
     override fun getCount(): Int {

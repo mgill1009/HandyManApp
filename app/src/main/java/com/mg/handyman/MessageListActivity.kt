@@ -19,6 +19,13 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_message_list.*
 
+/**
+ * Inbox
+ * This activity shows a list of existing conversations that a user has
+ * User can click name of the person that he wants to view or restart the
+ * conversation with
+ */
+
 class MessageListActivity : AppCompatActivity() {
 
     private val db = Firebase.firestore
@@ -39,6 +46,7 @@ class MessageListActivity : AppCompatActivity() {
         getUsers()
     }
 
+    // Retrieves a list of users that a user has interacted with in the past
     private fun getUsers() {
         val tmpArr: MutableList<User> = ArrayList()
 

@@ -4,6 +4,10 @@ import android.os.Parcelable
 import com.google.firebase.Timestamp
 import kotlinx.android.parcel.Parcelize
 
+/**
+ * data class to model an entry of a job posting
+ */
+
 @Parcelize
 data class Job(
     val title: String = "",
